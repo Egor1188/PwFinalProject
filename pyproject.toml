@@ -1,0 +1,24 @@
+[project]
+name = "pwfinalproject"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Heorhii Mishcheriakov",email = "egor1188@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "playwright (>=1.49.0)",
+    "pytest (>=8.0.0)",
+    "pytest-playwright (>=0.6.0)"
+]
+
+[tool.poetry]
+package-mode = false
+
+[tool.pytest.ini_options]
+markers = ["login_test: тесты перехода на страницу логина"]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
