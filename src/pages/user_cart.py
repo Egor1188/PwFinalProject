@@ -1,5 +1,5 @@
 from pages.base_page import BasePage
-from pages.locators import UserCartLocators
+from locators.user_cart_locators import UserCartLocators
 
 
 class UserCart(BasePage):

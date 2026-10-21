@@ -10,14 +10,22 @@ requires-python = ">=3.10"
 dependencies = [
     "playwright (>=1.49.0)",
     "pytest (>=8.0.0)",
-    "pytest-playwright (>=0.6.0)"
+    "pytest-playwright (>=0.6.0)",
+    "loguru (>=0.7.0)",
+    "pyyaml (>=6.0.3,<7.0.0)",
+    "allure-pytest (>=2.13.5)"
 ]
 
 [tool.poetry]
 package-mode = false
 
 [tool.pytest.ini_options]
-markers = ["login_test: тесты перехода на страницу логина"]
+pythonpath = ["src"]
+markers = ["login_test: tests for going to the login page"]
+# loguru is propagated to logging (see conftest), so pytest provides the live console log
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "%(message)s"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

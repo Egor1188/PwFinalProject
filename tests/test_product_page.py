@@ -2,7 +2,7 @@ import time
 
 import pytest
 
-from pages.locators import LoginPageLocators
+from locators.login_page_locators import LoginPageLocators
 from pages.login_page import LoginPage
 from pages.product_page import ProductPage
 from pages.user_cart import UserCart
@@ -62,7 +62,7 @@ def test_guest_can_add_product_to_basket(page, item):
     product_page.check_cart_worth()
 
 
-@pytest.mark.xfail(reason="Сообщение об успехе появляется и не исчезает — ожидаемое поведение сайта")
+@pytest.mark.xfail(reason="The success message appears and does not disappear - expected site behavior")
 def test_guest_cant_see_success_message_after_adding_product_to_basket(page):
     link = 'https://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019'
     product_page = ProductPage(page=page, url=link)
@@ -79,7 +79,7 @@ def test_guest_cant_see_success_message(page):
     product_page.should_not_be_success_message()
 
 
-@pytest.mark.xfail(reason="Сообщение об успехе появляется и не исчезает — ожидаемое поведение сайта")
+@pytest.mark.xfail(reason="The success message appears and does not disappear - expected site behavior")
 def test_message_disappeared_after_adding_product_to_basket(page):
     link = 'https://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019'
     product_page = ProductPage(page=page, url=link)

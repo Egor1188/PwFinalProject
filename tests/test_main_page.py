@@ -1,6 +1,6 @@
 import pytest
 
-from pages.locators import MainPageLocators
+from locators.main_page_locators import MainPageLocators
 from pages.login_page import LoginPage
 from pages.main_page import MainPage
 from pages.user_cart import UserCart

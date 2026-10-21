@@ -1,7 +1,8 @@
 import math
 
 from pages.base_page import BasePage
-from pages.locators import ProductPageLocators
+from locators.product_page_locators import ProductPageLocators
+from loguru import logger
 
 
 class ProductPage(BasePage):
@@ -9,29 +10,31 @@ class ProductPage(BasePage):
         super().__init__(page, url, timeout)
         self.quiz_code = None
         self._dialogs_handled = 0
-        # В Playwright диалоги (alert/prompt) по умолчанию закрываются автоматически,
-        # поэтому обработчик вешаем заранее, до клика, вызывающего диалог
+        # In Playwright dialogs (alert/prompt) are dismissed automatically by default,
+        # so the handler is attached in advance, before the click that triggers the dialog
         self.page.on("dialog", self._handle_dialog)
 
     def _handle_dialog(self, dialog):
         if dialog.type == "prompt":
             x = dialog.message.split(" ")[2]
             answer = str(math.log(abs((12 * math.sin(float(x))))))
+            logger.info('Prompt: {!r}, answer: {}', dialog.message, answer)
             dialog.accept(answer)
         else:
             self.quiz_code = dialog.message
-            print(f"Your code: {dialog.message}")
+            logger.info("Your code: {}", dialog.message)
             dialog.accept()
         self._dialogs_handled += 1
 
     def add_to_cart(self):
+        logger.info('Adding the product to the cart')
         self.page.locator(ProductPageLocators.ADD_TO_CART_BUTTON).click()
 
     def solve_quiz_and_get_code(self):
-        # Диалоги решает обработчик; здесь ждём первый (quiz), затем до 2 секунд второй (код)
+        # The handler solves the dialogs; here we wait for the first one (quiz), then up to 2 seconds for the second (code)
         self._wait_dialogs(1, self.timeout)
         if not self._wait_dialogs(2, 2):
-            print("No second alert presented")
+            logger.warning("No second alert presented")
 
     def _wait_dialogs(self, count, timeout):
         waited = 0
