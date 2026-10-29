@@ -51,6 +51,7 @@ jobs:
           --alluredir=allure-results
           --reruns 2
           --reruns-delay 2
+          -n 2
 
       - name: Upload Allure results
         if: always()

@@ -5,3 +5,4 @@ loguru>=0.7.0
 allure-pytest>=2.13.5
 pyyaml>=6.0.3,<7.0.0
 pytest-rerunfailures>=14.0
+pytest-xdist>=3.5.0
