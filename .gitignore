@@ -4,3 +4,8 @@ __pycache__/
 .venv/
 test-results/
 logs/
+
+.idea/
+allure-results/
+var/
+configs/config.yml
