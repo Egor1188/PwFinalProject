@@ -39,7 +39,7 @@ jobs:
 
       # config.yml is not committed, only the example
       - name: Create config
-        run: cp configs/config.api.1.example.yml configs/config.yml
+        run: cp configs/config.pw.1.example.yml configs/config.yml
 
       - name: Run tests
         env:
