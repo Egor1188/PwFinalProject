@@ -14,13 +14,20 @@ def project_config():
     return Config()
 
 
+class MaskedStr(str):
+    """A str that hides its value in repr: pytest prints fixture arguments in tracebacks (and they end up in logs and artifacts)"""
+
+    def __repr__(self):
+        return "'***'"
+
+
 # Password of the throwaway users registered by the tests - comes from the environment, not from the code
 @pytest.fixture(scope="session")
 def test_user_password():
     password = os.environ.get("TEST_USER_PASSWORD")
     if not password:
         pytest.fail("Environment variable TEST_USER_PASSWORD is not set")
-    return password
+    return MaskedStr(password)
 
 
 @pytest.fixture(autouse=True, scope="session")
@@ -54,6 +61,12 @@ def pytest_runtest_makereport(item, call):
     if rep.when in ("setup", "call") and rep.failed:
         logger.error(f"[{item.nodeid}] {rep.when} failed:\n{rep.longreprtext}")
         page = item.funcargs.get("page")
+        if page is None and rep.when == "setup":
+            # when a fixture fails in setup, "page" is not in funcargs yet - take it from the fixture cache
+            try:
+                page = item._request.getfixturevalue("page")
+            except Exception:
+                page = None
         if page is not None:
             take_screenshot(page, item.nodeid)
 
