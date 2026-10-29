@@ -49,7 +49,8 @@ jobs:
           --browser ${{ matrix.browser }}
           --language ${{ inputs.language || 'en' }}
           --alluredir=allure-results
-          -n 2
+          --reruns 2
+          --reruns-delay 2
 
       - name: Upload Allure results
         if: always()
