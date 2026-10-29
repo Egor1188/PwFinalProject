@@ -26,9 +26,9 @@ items = [
 
 class TestUserAddToBasketFromProductPage:
     @pytest.fixture(scope='function', autouse=True)
-    def setup(self, page):
+    def setup(self, page, test_user_password):
         self.email = str(time.time()) + '@example.com'
-        self.password = 'ZgUnV)12345'
+        self.password = test_user_password
         login_page = LoginPage(page, LoginPageLocators.LOGIN_LINK)
         login_page.open()
         login_page.register_new_user(self.email, self.password)

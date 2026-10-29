@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 
 import allure
@@ -11,6 +12,15 @@ from configs.config import Config
 @pytest.fixture(scope="session")
 def project_config():
     return Config()
+
+
+# Password of the throwaway users registered by the tests - comes from the environment, not from the code
+@pytest.fixture(scope="session")
+def test_user_password():
+    password = os.environ.get("TEST_USER_PASSWORD")
+    if not password:
+        pytest.fail("Environment variable TEST_USER_PASSWORD is not set")
+    return password
 
 
 @pytest.fixture(autouse=True, scope="session")

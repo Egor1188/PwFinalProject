@@ -42,6 +42,8 @@ jobs:
         run: cp configs/config.api.1.example.yml configs/config.yml
 
       - name: Run tests
+        env:
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
         run: >
           pytest
           --browser ${{ matrix.browser }}

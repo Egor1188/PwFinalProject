@@ -8,6 +8,12 @@ playwright install chromium firefox
 ```
 
 ## Running
+The tests that register a user need the password of the test user in the `TEST_USER_PASSWORD` environment variable
+(in CI - the `TEST_USER_PASSWORD` repository secret):
+```
+export TEST_USER_PASSWORD='...'      # PowerShell: $env:TEST_USER_PASSWORD = '...'
+```
+
 ```
 pytest                               # chromium, en, headless
 pytest --browser firefox             # firefox
